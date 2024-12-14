@@ -3,9 +3,11 @@
 @section('title', 'Products')
 
 @section('content')
-    <h1 class="mb-4">Products</h1>
-    <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
-    <table class="table table-striped">
+    <h1 class="my-5">Products</h1>
+    <a href="{{ route('admin.products.create') }}" class="btn waves-effect waves-light btn-grd-primary m-5">Add New Product</a>
+
+
+    <table class="table table-hover table-striped mt-5">
         <thead>
             <tr>
                 <th>#</th>

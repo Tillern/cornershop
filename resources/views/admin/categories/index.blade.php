@@ -4,8 +4,8 @@
 
 @section('content')
     <h1 class="mb-4">Categories</h1>
-    <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">Add New Category</a>
-    <table class="table table-striped">
+    <a href="{{ route('admin.categories.create') }}" class="btn waves-effect waves-light btn-grd-primary m-5">Add New Category</a>
+    <table class="table table-hover table-striped">
         <thead>
             <tr>
                 <th>#</th>
