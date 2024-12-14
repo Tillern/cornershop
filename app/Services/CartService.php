@@ -1,38 +1,54 @@
 <?php
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Redis;
 
 class CartService
 {
-    protected $redis;
+    protected $cartKey;
 
-    public function __construct()
+    public function __construct($userId)
     {
-        $this->redis = Redis::connection();
+        $this->cartKey = "cart:{$userId}";
     }
 
-    public function addToCart($customerId, $productId, $quantity)
+    /**
+     * Get all items in the user's cart.
+     */
+    public function getCartItems()
     {
-        $key = "cart:$customerId";
-        $this->redis->hIncrBy($key, $productId, $quantity);
+        $items = Redis::hgetall($this->cartKey);
+        return array_map('json_decode', $items);
     }
 
-    public function getCartItems($customerId)
+    /**
+     * Add an item to the cart.
+     */
+    public function addToCart($productId, $quantity)
     {
-        $key = "cart:$customerId";
-        return $this->redis->hGetAll($key);
+        $existingItem = Redis::hget($this->cartKey, $productId);
+        $item = $existingItem ? json_decode($existingItem, true) : ['quantity' => 0];
+
+        $item['quantity'] += $quantity;
+
+        Redis::hset($this->cartKey, $productId, json_encode($item));
+        return $item;
     }
 
-    public function removeCartItem($customerId, $productId)
+    /**
+     * Remove an item from the cart.
+     */
+    public function removeFromCart($productId)
     {
-        $key = "cart:$customerId";
-        $this->redis->hDel($key, $productId);
+        Redis::hdel($this->cartKey, $productId);
     }
 
-    public function clearCart($customerId)
+    /**
+     * Clear the cart after order placement.
+     */
+    public function clearCart()
     {
-        $key = "cart:$customerId";
-        $this->redis->del($key);
+        Redis::del($this->cartKey);
     }
 }

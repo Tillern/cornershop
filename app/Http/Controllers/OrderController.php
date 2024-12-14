@@ -2,37 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\OrderService;
+use App\Services\CartService;
 use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   
+    public function __construct(OrderService $orderService, CartService $cartService)
     {
-        //
+        $this->orderService = $orderService;
+        $this->cartService = $cartService;
     }
 
-    public function placeOrder(Request $request)
-{
-    $cart = json_decode(Redis::get('cart'), true);
-    $totalPrice = array_reduce($cart, fn($sum, $item) => $sum + $item['price'], 0);
-
-    $order = Order::create([
-        'customer_name' => $request->customer_name,
-        'customer_email' => $request->customer_email,
-        'address' => $request->address,
-        'products' => json_encode($cart),
-        'total_price' => $totalPrice,
-    ]);
-
-    Redis::del('cart');
-    return response()->json(['message' => 'Order placed successfully'], 200);
-}
-
+    
+    public function index()
+    {
+        
+    }
+    
+    public function placeOrder()
+    {
+        $cartItems = $this->cartService->getCartItems();
+    
+        if (empty($cartItems)) {
+            return response()->json(['error' => 'Cart is empty'], 400);
+        }
+    
+        $order = $this->orderService->placeOrder(auth()->id(), $cartItems);
+        $this->cartService->clearCart();
+    
+        return response()->json(['message' => 'Order placed successfully', 'order' => $order]);
+    }
+    
 
     /**
      * Show the form for creating a new resource.

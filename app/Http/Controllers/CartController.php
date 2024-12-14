@@ -1,83 +1,63 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
+use App\Services\CartService;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    protected $redisCartKey;
+
+    public function __construct()
     {
-        //
+        $this->cartService = new CartService(auth()->id());
+        $this->redisCartKey = 'cart:' . session()->getId();
+    }    
+    
+    public function addToCart(Request $request, $id)
+    {
+        $quantity = $request->input('quantity', 1);
+        $item = $this->cartService->addToCart($id, $quantity);
+    
+        return response()->json(['message' => 'Item added to cart', 'item' => $item]);
+    }
+    
+    public function getCart()
+    {
+        $cartItems = $this->cartService->getCartItems();
+        return response()->json($cartItems);
+    }
+    
+
+    // Remove item from cart
+    public function remove(Request $request)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|integer',
+        ]);
+
+        $productKey = 'product_' . $validated['product_id'];
+        Redis::hdel($this->redisCartKey, $productKey);
+
+        return response()->json(['message' => 'Item removed from cart successfully!'], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // View cart
+    public function view()
     {
-        //
-    }
+        $cart = Redis::hgetall($this->redisCartKey);
 
-    public function add(Request $request)
-{
-    $cart = Redis::get('cart') ? json_decode(Redis::get('cart'), true) : [];
-    $cart[] = $request->all();
-    Redis::set('cart', json_encode($cart));
-    return response()->json(['message' => 'Product added to cart'], 200);
-}
+        $items = collect($cart)->map(function ($item, $key) {
+            $productId = str_replace('product_', '', $key);
+            $details = json_decode($item, true);
+            return [
+                'product_id' => $productId,
+                'quantity' => $details['quantity'],
+            ];
+        });
 
-public function remove($id)
-{
-    $cart = json_decode(Redis::get('cart'), true);
-    $cart = array_filter($cart, fn($item) => $item['id'] !== $id);
-    Redis::set('cart', json_encode($cart));
-    return response()->json(['message' => 'Product removed from cart'], 200);
-}
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cart $cart)
-    {
-        //
+        return response()->json($items, 200);
     }
 }
