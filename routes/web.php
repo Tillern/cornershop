@@ -22,12 +22,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('admin.products.edit');
     Route::put('/products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
-
-    Route::resource('categories', CategoryController::class);
-    
-    Route::get('orders', [OrderController::class, 'index'])->name('admin.orders.index');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('admin.orders.show');
-    Route::put('orders/{order}', [OrderController::class, 'update'])->name('admin.orders.update');
+   
+    Route::get('orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
+    Route::put('orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 
     Route::get('/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
     Route::get('/categories/{category}',[CategoryController::class, 'show']) -> name('admin.categories.show');
