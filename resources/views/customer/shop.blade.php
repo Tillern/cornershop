@@ -38,7 +38,8 @@
                 <nav class="navbar navbar-expand-lg navbar-light main_box">
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
-                        <a class="navbar-brand logo_h" href="index.html"><img src="img/logo.png" alt=""></a>
+                        <a class="navbar-brand logo_h" href="index.html"><img
+                                src="{{ asset('customerassets/img/logo.png') }}" alt=""></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -53,15 +54,14 @@
                                 <li class="nav-item submenu dropdown active">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
                                         role="button" aria-haspopup="true" aria-expanded="false">Shop</a>
-                                    
+
                                 </li>
-                               
-                        
+
                                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li class="nav-item"><a href="#" class="cart"><span
-                                            class="ti-bag"></span></a></li>
+                                <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a>
+                                </li>
                                 <li class="nav-item">
                                     <button class="search"><span class="lnr lnr-magnifier"
                                             id="search"></span></button>
@@ -167,7 +167,31 @@
 
                                                 <a href="" class="social-info">
                                                     <span class="ti-bag"></span>
-                                                    <p class="hover-text">add to cart</p>
+                                                    <form action="{{ route('cart.add') }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $product->id }}">
+                                                        <input type="number" name="quantity" value="1"
+                                                            min="1" class="form-control" required>
+                                                        <button type="submit" class="btn btn-success hover-text">Add to
+                                                            Cart</button>
+                                                    </form>
+
+                                                    {{-- <form method="POST" action="{{ route('cart.add') }}">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $product->id }}">
+                                                        <input type="hidden" name="name"
+                                                            value="{{ $product->name }}">
+                                                        <input type="hidden" name="price"
+                                                            value="{{ $product->price }}">
+                                                        <input type="hidden" name="image"
+                                                            value="{{ $product->image }}">
+                                                        <input type="hidden" name="quantity" value="1">
+                                                        <button type="submit" class="btn btn-success hover-text">Add
+                                                            to Cart</button>
+                                                    </form> --}}
+
                                                 </a>
                                                 <a href="" class="social-info">
                                                     <span class="lnr lnr-heart"></span>
@@ -196,29 +220,7 @@
                     <div class="pagination">
                         {{ $products->links() }}
                     </div>
-                    <!-- Start Filter Bar -->
-                    <div class="filter-bar d-flex flex-wrap align-items-center">
-                        <div class="sorting mr-auto">
-                            <select>
-                                <option value="1">Show 12</option>
-                                <option value="1">Show 12</option>
-                                <option value="1">Show 12</option>
-                            </select>
-                        </div>
-                        <div class="pagination">
-                            <a href="#" class="prev-arrow"><i class="fa fa-long-arrow-left"
-                                    aria-hidden="true"></i></a>
-                            <a href="#" class="active">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#" class="dot-dot"><i class="fa fa-ellipsis-h"
-                                    aria-hidden="true"></i></a>
-                            <a href="#">6</a>
-                            <a href="#" class="next-arrow"><i class="fa fa-long-arrow-right"
-                                    aria-hidden="true"></i></a>
-                        </div>
-                    </div>
-                    <!-- End Filter Bar -->
+
                 </div>
             </div>
         </div>
@@ -254,7 +256,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r2.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r2.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -267,7 +269,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r3.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r3.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -280,7 +282,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r5.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r5.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -293,7 +295,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r6.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r6.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -306,7 +308,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6 mb-20">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r7.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r7.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -319,7 +321,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r9.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r9.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -332,7 +334,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r10.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r10.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -345,7 +347,7 @@
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="single-related-product d-flex">
-                                    <a href="#"><img src="{{ asset('customerasset/img/r11.jpg') }}"
+                                    <a href="#"><img src="{{ asset('customerassets/img/r11.jpg') }}"
                                             alt=""></a>
                                     <div class="desc">
                                         <a href="#" class="title">Black lace Heels</a>
@@ -361,7 +363,8 @@
                     <div class="col-lg-3">
                         <div class="ctg-right">
                             <a href="#" target="_blank">
-                                <img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
+                                <img class="img-fluid d-block mx-auto"
+                                    src="{{ asset('customerassets/img/category/c5.jpg') }}" alt="">
                             </a>
                         </div>
                     </div>
@@ -420,14 +423,14 @@
                         <div class="single-footer-widget mail-chimp">
                             <h6 class="mb-20">Instragram Feed</h6>
                             <ul class="instafeed d-flex flex-wrap">
-                                <li><img src="img/i1.jpg" alt=""></li>
-                                <li><img src="img/i2.jpg" alt=""></li>
-                                <li><img src="img/i3.jpg" alt=""></li>
-                                <li><img src="img/i4.jpg" alt=""></li>
-                                <li><img src="img/i5.jpg" alt=""></li>
-                                <li><img src="img/i6.jpg" alt=""></li>
-                                <li><img src="img/i7.jpg" alt=""></li>
-                                <li><img src="img/i8.jpg" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i1.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i2.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i3.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i4.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i5.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i6.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i7.jpg') }}" alt=""></li>
+                                <li><img src="{{ asset('customerassets/img/i8.jpg') }}" alt=""></li>
                             </ul>
                         </div>
                     </div>
@@ -446,14 +449,11 @@
                 </div>
                 <div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
                     <p class="footer-text m-0">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;
                         <script>
                             document.write(new Date().getFullYear());
-                        </script> All rights reserved | This template is made with <i
-                            class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                            target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </script> All rights reserved <i class="fa fa-heart-o" aria-hidden="true"></i>
+                        by <a href="#" target="_blank">Minodi</a>
                     </p>
                 </div>
             </div>
@@ -471,13 +471,16 @@
                         <div class="row align-items-center">
                             <div class="col-lg-6">
                                 <div class="quick-view-carousel">
-                                    <div class="item" style="background: url(img/organic-food/q1.jpg);">
+                                    <div class="item"
+                                        style="background: url({{ asset('customerassets/img/organic-food/q1.jpg') }});">
 
                                     </div>
-                                    <div class="item" style="background: url(img/organic-food/q1.jpg);">
+                                    <div class="item"
+                                        style="background: url({{ asset('customerassets/img/organic-food/q1.jpg') }});">
 
                                     </div>
-                                    <div class="item" style="background: url(img/organic-food/q1.jpg);">
+                                    <div class="item"
+                                        style="background: url({{ asset('customerassets/img/organic-food/q1.jpg') }});">
 
                                     </div>
                                 </div>
@@ -538,21 +541,21 @@
             </div>
         </div>
 
-        <script src="js/vendor/jquery-2.2.4.min.js"></script>
+        <script src="{{ asset('customerassets/js/vendor/jquery-2.2.4.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
             integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">
         </script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery.sticky.js"></script>
-        <script src="js/nouislider.min.js"></script>
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
+        <script src="{{ asset('customerassets/js/vendor/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('customerassets/js/jquery.ajaxchimp.min.js') }}"></script>
+        <script src="{{ asset('customerassets/js/jquery.nice-select.min.js') }}"></script>
+        <script src="{{ asset('customerassets/js/jquery.sticky.js') }}"></script>
+        <script src="{{ asset('customerassets/js/nouislider.min.js') }}"></script>
+        <script src="{{ asset('customerassets/js/jquery.magnific-popup.min.js') }}"></script>
+        <script src="{{ asset('customerassets/js/owl.carousel.min.js') }}"></script>
         <!--gmaps Js-->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-        <script src="js/gmaps.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="{{ asset('customerassets/js/gmaps.min.js') }}"></script>
+        <script src="{{ asset('customerassets/js/main.js') }}"></script>
     </body>
 
 </html>

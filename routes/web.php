@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Customer\CustomerProductDetailsController;
 
 
@@ -55,3 +56,22 @@ Route::prefix('customer')->group(function () {
     Route::get('orders', [OrderController::class, 'userOrders'])->name('customer.orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('customer.orders.show');
 });
+
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+
+
+// Route::prefix('cart')->name('cart.')->group(function () {
+//     Route::get('/', [CartController::class, 'index'])->name('index');
+//     Route::post('/add/{productId}', [CartController::class, 'add'])->name('cart.add'); // This is the route to add to the cart
+//     Route::get('/remove/{productId}', [CartController::class, 'remove'])->name('remove');
+//     Route::post('/update/{productId}', [CartController::class, 'update'])->name('update');
+//     Route::get('/clear', [CartController::class, 'clear'])->name('clear');
+// });
+
+// Route::get('/test-redis', function () {
+//     Redis::set('test', 'Redis from Google Cloud is working!');
+//     return Redis::get('test');
+// });
