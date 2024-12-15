@@ -12,8 +12,10 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
+                <th>Image</th>
                 <th>Category</th>
-                <th>Price</th>
+                <th>Price (in Kes.)</th>
+                <th>Quantity in Stock</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -22,8 +24,18 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $product->name }}</td>
+                     <td>
+                    @if ($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" 
+                             class="img-thumbnail" style="width: 50px; height: 50px;">
+                    @else
+                        <img src="{{ asset('images/placeholder.png') }}" alt="Placeholder" 
+                             class="img-thumbnail" style="width: 80px; height: 80px;">
+                    @endif
+                </td>
                     <td>{{ $product->category->name ?? 'Uncategorized' }}</td>
-                    <td>${{ $product->price }}</td>
+                    <td>{{ $product->price }}</td>
+                    <td>{{ $product->stock }}</td>
                     <td>
                         <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-sm btn-warning">Edit</a>
                         <a href="{{ route('admin.products.show', $product->id) }}" class="btn btn-sm btn-info">View</a>

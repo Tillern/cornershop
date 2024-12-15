@@ -2,13 +2,15 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\CustomerProductController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\Customer\CustomerController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Customer\CustomerProductDetailsController;
 
 
 Route::prefix('admin')->group(function () {
@@ -37,7 +39,10 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::prefix('customer')->group(function () {
-    Route::get('/', [CustomerController::class, 'index'])->name('customer.dashboard');
+
+    Route::get('/shop', [CustomerProductController::class, 'shop'])->name('customer.shop');
+
+    Route::get('/product/{id}', [CustomerProductDetailsController::class, 'show'])->name('customer.products.details');
 
     Route::get('products', [CustomerController::class, 'viewProducts'])->name('customer.products.index');
     

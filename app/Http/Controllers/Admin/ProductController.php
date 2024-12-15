@@ -45,9 +45,11 @@ class ProductController extends Controller
     $product->stock = $validated['stock'];
     $product->category_id = $validated['category_id'];
 
-    // Handle image upload if present
+    
     if ($request->hasFile('image')) {
-        $product->image = $request->file('image')->store('public/products');
+        $image = $request->file('image')->store('products', 'public');
+        $product->image = $image;
+        $product->save();
     }
 
     // Save the product to the database
@@ -95,7 +97,9 @@ class ProductController extends Controller
     $product->category_id = $request->category_id;
     
     if ($request->hasFile('image')) {
-        $product->image = $request->file('image')->store('public/products');
+        $image = $request->file('image')->store('products', 'public');
+        $product->image = $image;
+        $product->save();
     }
 
     $product->save();
