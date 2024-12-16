@@ -261,39 +261,31 @@
                             </div>
 
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="active my-2">
-                                    <a href="index.html" class="waves-effect waves-dark">
+                                <li class="my-2">
+                                    <a href="{{ route('admin.products.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main"><a class="nav-lik"
-                                                href="{{ route('admin.products.index') }}">Products</a></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Products</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
 
                                 <li class="my-2">
-                                    <a href="index.html" class="waves-effect waves-dark">
+                                    <a href="{{ route('admin.categories.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main"><a class="nav-link"
-                                                href="{{ route('admin.categories.index') }}">Categories</a></span>
-                                        <span class="pcoded-mcaret"></span>
+                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Categories</span>
+                                        {{-- <span class="pcoded-mcaret"></span> --}}
                                     </a>
                                 </li>
 
                                 <li class="my-2">
-                                    <a href="index.html" class="waves-effect waves-dark">
+                                    <a href="{{ route('admin.orders.index') }}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Orders</span>
-                                        <span class="pcoded-mcaret"></span>
+                                        {{-- <span class="pcoded-mcaret"></span> --}}
                                     </a>
                                 </li>
 
-                                <li class="my-2">
-                                    <a href="index.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
-                                        <span class="pcoded-mtext" data-i18n="nav.dash.main">Customers</span>
-                                        <span class="pcoded-mcaret"></span>
-                                    </a>
-                                </li>
+                    
 
                             </ul>
 

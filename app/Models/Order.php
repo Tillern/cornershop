@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'total_price', 'status'];
 
-    public function user()
+    use HasFactory;
+    protected $fillable = [
+        'customer_name',
+        'customer_email',
+        'status',
+    ];
+
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 
     public function items()
@@ -19,3 +25,4 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 }
+

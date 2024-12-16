@@ -8,81 +8,46 @@ use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
 class OrderController extends Controller
 {
-   
-    public function __construct(OrderService $orderService, CartService $cartService)
-    {
-        $this->orderService = $orderService;
-        $this->cartService = $cartService;
-    }
-
-    
-    public function index()
-    {
-        
-    }
-    
-    public function placeOrder()
-    {
-        $cartItems = $this->cartService->getCartItems();
-    
-        if (empty($cartItems)) {
-            return response()->json(['error' => 'Cart is empty'], 400);
-        }
-    
-        $order = $this->orderService->placeOrder(auth()->id(), $cartItems);
-        $this->cartService->clearCart();
-    
-        return response()->json(['message' => 'Order placed successfully', 'order' => $order]);
-    }
-    
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        // Fetch cart items and total price from the session
+        $cartItems = session()->get('cart', []);
+        $totalPrice = array_reduce($cartItems, fn($carry, $item) => $carry + ($item['price'] * $item['quantity']), 0);
+
+        return view('order.create', compact('cartItems', 'totalPrice'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        // Validate and process the order
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'address' => 'required|string',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
-    {
-        //
-    }
+        // Create an order (example logic, replace with actual database logic)
+        $order = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'address' => $request->input('address'),
+            'cart_items' => json_encode(session()->get('cart', [])),
+            'total_price' => session()->get('cart_total', 0),
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Order $order)
-    {
-        //
-    }
+        // Here you would save the order to the database
+        // For example:
+        // Order::create($order);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Order $order)
-    {
-        //
-    }
+        // Clear the cart after placing the order
+        session()->forget('cart');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Order $order)
-    {
-        //
+        return redirect()->route('cart.index')->with('success', 'Your order has been placed successfully!');
     }
 }

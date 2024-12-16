@@ -6,25 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('name');
-            $table->text('description');
-            $table->decimal('price', 8, 2);
-            $table->integer('stock');
-            $table->string('image');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
         });
     }
-
-   
-    public function down(): void
+    
+    public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropColumn(['name', 'description', 'price', 'stock', 'image', 'category_id']);
+            $table->dropColumn('category_id');
         });
     }
 };

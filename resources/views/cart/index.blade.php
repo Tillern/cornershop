@@ -17,6 +17,8 @@
         <!-- Site Title -->
         <title>cart</title>
 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
         <!--
             CSS
             ============================================= -->
@@ -106,7 +108,6 @@
                                 <tbody>
                                     @foreach ($cart as $id => $item)
                                         <tr>
-
                                             <td>
                                                 <div class="media">
                                                     <div class="d-flex">
@@ -123,15 +124,15 @@
                                             <td>
                                                 <form class="product_count" action="{{ route('cart.update', $id) }}"
                                                     method="POST">
-                                                   
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <input type="number" name="quantity"
-                                                            value="{{ $item['quantity'] }}"
-                                                            class="form-control input-text qty" min="1" required>
-                                                        <button type="submit"
-                                                            class="btn btn-primary btn-sm mt-2">Update</button>
-                                                   
+
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <input type="number" name="quantity"
+                                                        value="{{ $item['quantity'] }}"
+                                                        class="form-control input-text qty" min="1" required>
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-sm mt-2">Update</button>
+
                                                 </form>
 
                                             </td>
@@ -146,7 +147,7 @@
                                                 </form>
                                             </td>
                                         </tr>
-
+@endforeach
                                         <tr class="bottom_button">
                                             <td>
                                                 <a class="gray_btn" href="#">Update Cart</a>
@@ -194,7 +195,8 @@
                                                     <ul class="list">
                                                         <li><a href="#">Flat Rate: KES.5.00</a></li>
                                                         <li><a href="#">Free Shipping</a></li>
-                                                        <li class="active"><a href="#">Local Delivery: KES. 200</a>
+                                                        <li class="active"><a href="#">Local Delivery: KES.
+                                                                200</a>
                                                         </li>
                                                     </ul>
                                                     <h6>Calculate Shipping <i class="fa fa-caret-down"
@@ -229,11 +231,15 @@
                                                 <div class="checkout_btn_inner d-flex align-items-center">
                                                     <a class="gray_btn" href="{{ route('customer.shop') }}">Continue
                                                         Shopping</a>
-                                                    <a class="primary-btn" href="#">Proceed to checkout</a>
+                                                    @if (!empty($cart) && count($cart) > 0)
+                                                        <a class="primary-btn" href="{{ route('order.create') }}"
+                                                            class="btn btn-primary"> Place Order </a>
+                                                    @endif
+
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    
                                 </tbody>
                             </table>
                         @else
@@ -243,6 +249,7 @@
             </div>
             </div>
         </section>
+
         <!--================End Cart Area =================-->
 
         <!-- start footer Area -->
@@ -332,7 +339,7 @@
             </div>
         </footer>
         <!-- End footer Area -->
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="js/vendor/jquery-2.2.4.min.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
             integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous">

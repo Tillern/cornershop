@@ -1,66 +1,192 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Cornershop - Fullstack E-commerce Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
+1. [Objective](#objective)
+2. [Key Features](#key-features)
+3. [Technologies Used](#technologies-used)
+4. [Project Architecture](#project-architecture)
+5. [Setup and Installation](#setup-and-installation)
+    - [Backend Setup](#backend-setup)
+    - [Frontend Setup](#frontend-setup)
+    - [Database Configuration](#database-configuration)
+    - [Redis Configuration](#redis-configuration)
+6. [Running Locally](#running-locally)
+7. [Testing](#testing)
+8. [Deployment](#deployment)
+    - [Dockerization](#dockerization)
+    - [CI/CD Pipeline](#ci-cd-pipeline)
+    - [Deployment to DigitalOcean](#deployment-to-digitalocean)
+9. [API Documentation](#api-documentation)
+10. [Screenshots](#screenshots)
+11. [License](#license)
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Objective
+Cornershop is a fullstack e-commerce application designed to showcase core functionalities for managing an online store. This project demonstrates the ability to implement robust cart functionality, order management, and deployment pipelines while adhering to modern development practices.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Key Features
+### Backend
+- **Cart Functionality:** Utilizes Redis to store cart items for optimized performance.
+- **Order Management:** Stores orders in a MySQL/PostgreSQL database.
+- **Error Handling:** Implements clear error messages and HTTP status codes.
+- **Testing:** Comprehensive test coverage for core features.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Frontend
+- **User Interface:** Clean and intuitive styling for easy navigation.
+- **Frameworks:** Flexible to use React or Vue.js for enhanced interactivity (optional).
 
-## Learning Laravel
+### Deployment
+- **Dockerized Application:** Simplifies setup and deployment.
+- **CI/CD Pipelines:** Automates testing and deployment processes using GitHub Actions.
+- **DigitalOcean Deployment:** Deployed to DigitalOcean with SSH authorization.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Required User Flow
+1. View available products.
+2. Add and remove products from the cart.
+3. Place an order.
+4. View orders.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Technologies Used
+- **Backend:** Laravel 11
+- **Frontend:** HTML, CSS, (React/Vue optional)
+- **Database:** MySQL or PostgreSQL
+- **Caching:** Redis
+- **Deployment:** Docker, GitHub Actions, DigitalOcean
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Project Architecture
+```plaintext
+Cornershop/
+├── backend/
+│   ├── app/
+│   ├── config/
+│   ├── database/
+│   └── tests/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   └── package.json
+├── docker-compose.yml
+├── README.md
+└── .github/
+    └── workflows/
+```
 
-## Laravel Sponsors
+## Setup and Installation
+### Backend Setup
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/cornershop.git
+   cd cornershop/backend
+   ```
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
+3. Set up the `.env` file:
+   ```plaintext
+   APP_NAME="Cornershop"
+   APP_ENV=local
+   APP_KEY=base64:YourKeyHere
+   APP_DEBUG=true
+   APP_URL=http://localhost
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=cornershop
+   DB_USERNAME=root
+   DB_PASSWORD=
 
-### Premium Partners
+   REDIS_HOST=127.0.0.1
+   REDIS_PASSWORD=null
+   REDIS_PORT=6379
+   ```
+4. Generate the application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### Frontend Setup
+1. Navigate to the `frontend` directory:
+   ```bash
+   cd ../frontend
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Contributing
+### Database Configuration
+1. Ensure MySQL/PostgreSQL is installed and running.
+2. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Redis Configuration
+1. Install Redis locally or via Docker:
+   ```bash
+   docker run -d -p 6379:6379 redis
+   ```
+2. Verify connection in `.env` file.
 
-## Code of Conduct
+## Running Locally
+1. Start the Laravel backend:
+   ```bash
+   php artisan serve
+   ```
+2. Access the application at `http://localhost:8000`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Testing
+Run tests for the backend:
+```bash
+php artisan test
+```
 
-## Security Vulnerabilities
+## Deployment
+### Dockerization
+1. Build and run the Docker containers:
+   ```bash
+   docker-compose up --build
+   ```
+2. Access the application at `http://localhost`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### CI/CD Pipeline
+1. Set up GitHub Actions workflow in `.github/workflows/` directory.
+2. Ensure proper testing and deployment scripts are included.
+
+### Deployment to DigitalOcean
+1. Set up a droplet on DigitalOcean.
+2. Install Docker and Docker Compose.
+3. Clone the repository and run the application:
+   ```bash
+   git clone https://github.com/yourusername/cornershop.git
+   cd cornershop
+   docker-compose up -d
+   ```
+
+## API Documentation
+API endpoints include:
+- **GET** `/api/products` - View all products
+- **POST** `/api/cart` - Add item to cart
+- **DELETE** `/api/cart/{id}` - Remove item from cart
+- **POST** `/api/order` - Place an order
+- **GET** `/api/orders` - View all orders
+
+## Screenshots
+**Home Page:**
+![Home Page](https://via.placeholder.com/800x400 "Home Page")
+
+**Cart Page:**
+![Cart Page](https://via.placeholder.com/800x400 "Cart Page")
+
+**Order Page:**
+![Order Page](https://via.placeholder.com/800x400 "Order Page")
 
 ## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License](LICENSE).

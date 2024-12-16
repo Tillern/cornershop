@@ -10,8 +10,8 @@ class CartController extends Controller
     public function index()
     {
         $cart = session()->get('cart', []); // Get cart from session
-        $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']); // Calculate total
-
+        $total = collect($cart)->sum(fn($item) => $item['price'] * $item['quantity']); 
+        
         return view('cart.index', compact('cart', 'total'));
     }
 
