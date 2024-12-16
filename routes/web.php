@@ -5,12 +5,9 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\CustomerProductController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\CustomerOrderController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Customer\CustomerProductDetailsController;
 
 
@@ -53,10 +50,15 @@ Route::prefix('customer')->group(function () {
 
     Route::get('/product/{id}', [CustomerProductDetailsController::class, 'show'])->name('customer.products.details');
 
-    Route::get('products', [CustomerController::class, 'viewProducts'])->name('customer.products.index');
+    Route::get('/orders/create', [CustomerOrderController::class, 'create'])->name('customer.orders.create');
 
-    Route::post('/orders', [CustomerOrderController::class, 'create']);
-    Route::get('/{customerId}/orders', [CustomerOrderController::class, 'view']);
+    Route::post('/orders', [CustomerOrderController::class, 'store'])->name('customer.orders.store');
+
+    Route::get('/orders/{order}', [CustomerOrderController::class, 'show'])->name('customer.orders.show');
+
+    Route::get('/orders', [CustomerOrderController::class, 'index'])->name('customer.orders.index');
+
+
 });
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');

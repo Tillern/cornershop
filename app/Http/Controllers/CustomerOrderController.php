@@ -2,49 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Models\Order;
 
 class CustomerOrderController extends Controller
 {
-    public function create(Request $request)
+    public function create()
     {
-        // Collect customer data
-        $customer = Customer::create($request->only('name', 'email', 'phone', 'address'));
+        $cartItems = session()->get('cart', []);
 
-        // Create order
-        $cartItems = $request->input('cart'); // Assumed cart is passed as array
-        $totalPrice = 0;
-
-        foreach ($cartItems as $item) {
-            $totalPrice += $item['price'] * $item['quantity'];
+        if (empty($cartItems)) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
-        $order = Order::create([
-            'customer_id' => $customer->id,
-            'total_price' => $totalPrice,
+        return view('customer.orders.create', compact('cartItems'));
+    }
+
+    public function store(Request $request)
+    {
+        // Validate order data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'address' => 'required|string',
+            'phone' => 'required|string|regex:/^\+?[0-9]{10,15}$/',
         ]);
 
-        foreach ($cartItems as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-            ]);
+        // Check if the cart is empty
+        $cartItems = session()->get('cart', []);
+        if (empty($cartItems)) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty!');
         }
 
-        return response()->json(['message' => 'Order placed successfully!', 'order_id' => $order->id]);
+        // Create the order
+        $order = Order::create([
+            'customer_name' => $validatedData['name'],
+            'customer_email' => $validatedData['email'],
+            'address' => $validatedData['address'],
+            'phone' => $validatedData['phone'],
+        ]);
+
+        // Add items to the order
+        foreach ($cartItems as $cartItem) {
+            if (isset($cartItem['product_id'], $cartItem['quantity'], $cartItem['price'])) {
+                $order->items()->create([
+                    'product_id' => $cartItem['product_id'],
+                    'quantity' => $cartItem['quantity'],
+                    'price' => $cartItem['price'],
+                ]);
+            } else {
+                Log::error('Cart item is missing product_id, quantity, or price', [
+                    'cart_item' => $cartItem,
+                    'order_id' => $order->id,
+                ]);
+            }
+        }
+
+        // Clear the cart
+        session()->forget('cart');
+
+        return redirect()->route('customer.orders.show', ['order' => $order->id])
+            ->with('success', 'Order placed successfully!');
     }
 
-    public function view($customerId)
+
+    public function index()
     {
-        $customer = Customer::with('orders.items')->find($customerId);
-
-        if (!$customer) {
-            return response()->json(['error' => 'Customer not found!'], 404);
-        }
-
-        return response()->json($customer);
+        $orders = Order::with('items')->get(); // Adjust logic as needed
+        return view('customer.orders.index', compact('orders'));
     }
+
+    public function show(Order $order)
+    {
+        // Load order items and related data if needed
+        $order->load('items'); // Assumes 'items' is a relationship on the Order model
+
+        return view('customer.orders.show', compact('order'));
+    }
+
 }
