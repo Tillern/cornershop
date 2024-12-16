@@ -47,6 +47,7 @@ Cornershop is a fullstack e-commerce application designed to showcase core funct
 3. Place an order.
 4. View orders.
 
+
 ## Technologies Used
 - **Backend:** Laravel 11
 - **Frontend:** HTML, CSS, (React/Vue optional)
@@ -180,13 +181,31 @@ API endpoints include:
 
 ## Screenshots
 **Home Page:**
-![Home Page](https://via.placeholder.com/800x400 "Home Page")
+![Screenshot (49)](https://github.com/user-attachments/assets/42a526db-ab17-4c1e-a1e5-ca5c100d6483)
 
-**Cart Page:**
-![Cart Page](https://via.placeholder.com/800x400 "Cart Page")
+**Product Category from admin panel**
+![Screenshot (43)](https://github.com/user-attachments/assets/e8d508b7-ef8d-4111-b05d-23a081a85ec4)
 
-**Order Page:**
-![Order Page](https://via.placeholder.com/800x400 "Order Page")
+**Product list from Admin side**
+![Screenshot (44)](https://github.com/user-attachments/assets/44d5a30b-609f-4003-a6e1-40b3cfa04a09)
+
+**Admin Product Addition**
+![Screenshot (47)](https://github.com/user-attachments/assets/5d777575-52c5-4ef6-b37b-84b6649b828e)
+
+**Admin Order Creation**
+![Screenshot (48)](https://github.com/user-attachments/assets/8e8adaa7-b8e0-463a-8c50-a9373302ba97)
+
+![Screenshot (50)](https://github.com/user-attachments/assets/3b2c454e-622d-4a62-99cf-e4b03d548f64)
+
+**List of orders from admin panel**
+![Screenshot (42)](https://github.com/user-attachments/assets/1298c297-4551-411d-a529-62009f70a0d5)
+
+
+**Admin Edit product details**
+![Screenshot (45)](https://github.com/user-attachments/assets/8554e2f7-4d68-4331-8976-aac8240d2230)
+
+**Admin add Product Category**
+![Screenshot (46)](https://github.com/user-attachments/assets/f7d486d6-760a-4e05-9be3-defa4a7495ca)
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
