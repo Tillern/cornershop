@@ -57,7 +57,7 @@
 
                                 </li>
 
-                                <li class="nav-item"><a class="nav-link" href="">My Orders</a></li>
+                                {{-- <li class="nav-item"><a class="nav-link" href="{{ route('customer.orders.show')}}">My Orders</a></li> --}}
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="nav-item"><a href="{{ route('cart.index')}}" class="cart"><span class="ti-bag"></span></a>

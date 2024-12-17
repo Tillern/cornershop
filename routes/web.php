@@ -10,6 +10,10 @@ use App\Http\Controllers\CustomerOrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Customer\CustomerProductDetailsController;
 
+Route::get('/', function () {
+    return view('layouts.app');
+});
+
 
 Route::prefix('admin')->group(function () {
 
