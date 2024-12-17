@@ -16,9 +16,8 @@
     - [Dockerization](#dockerization)
     - [CI/CD Pipeline](#ci-cd-pipeline)
     - [Deployment to DigitalOcean](#deployment-to-digitalocean)
-9. [API Documentation](#api-documentation)
-10. [Screenshots](#screenshots)
-11. [License](#license)
+9. [Screenshots](#screenshots)
+10. [License](#license)
 
 ---
 
@@ -57,27 +56,66 @@ Cornershop is a fullstack e-commerce application designed to showcase core funct
 
 ## Project Architecture
 ```plaintext
-Cornershop/
-├── backend/
-│   ├── app/
-│   ├── config/
-│   ├── database/
-│   └── tests/
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   └── package.json
+CORNERSHOP/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/
+│   │   │   ├── Customer/
+│   │   ├── Requests/
+│   │   └── Middleware/
+│   ├── Models/
+│   ├── Providers/
+│   ├── Services/
+│   └── View/
+│
+├── bootstrap/
+├── config/
+├── database/
+├── nginx/ 
+├── node_modules/ 
+├── public/
+├── resources/
+│   ├── css/
+│   ├── js/
+│   ├── views/
+│   │   ├── admin/
+│   │   ├── cart/
+│   │   ├── customer/
+│   │   └── layouts/
+│   │       └── app.blade.php
+├── routes/
+├── storage/
+├── tests/         
+├── vendor/        
+├── .dockerignore
+├── .editorconfig
+├── .env
+├── .env.example
+├── .env.production
+├── .env.testing
+├── .gitattributes
+├── .gitignore
+├── .styleci.yml
+├── artisan
+├── CHANGELOG.md
+├── composer.json
+├── composer.lock
+├── Dockerfile
 ├── docker-compose.yml
-├── README.md
-└── .github/
-    └── workflows/
+├── package.json
+├── package-lock.json
+├── phpunit.xml
+├── postcss.config.js
+└── README.md
+
 ```
 
 ## Setup and Installation
 ### Backend Setup
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/cornershop.git
+   git clone https://github.com/Tillern/cornershop.git
    cd cornershop/backend
    ```
 2. Install dependencies:
@@ -92,11 +130,11 @@ Cornershop/
    APP_DEBUG=true
    APP_URL=http://localhost
 
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=cornershop
-   DB_USERNAME=root
+   DB_CONNECTION=
+   DB_HOST=
+   DB_PORT=
+   DB_DATABASE=
+   DB_USERNAME=
    DB_PASSWORD=
 
    REDIS_HOST=127.0.0.1
@@ -109,17 +147,17 @@ Cornershop/
    ```
 
 ### Frontend Setup
-1. Navigate to the `frontend` directory:
+1. Navigate to the `cornershop` directory:
    ```bash
-   cd ../frontend
+   cd ../cornershop
    ```
 2. Install dependencies:
    ```bash
-   npm install
+   composer install
    ```
 3. Start the development server:
    ```bash
-   npm run dev
+   php artisan serve
    ```
 
 ### Database Configuration
@@ -166,18 +204,10 @@ php artisan test
 2. Install Docker and Docker Compose.
 3. Clone the repository and run the application:
    ```bash
-   git clone https://github.com/yourusername/cornershop.git
+   git clone https://github.com/Tillern/cornershop.git
    cd cornershop
    docker-compose up -d
    ```
-
-## API Documentation
-API endpoints include:
-- **GET** `/api/products` - View all products
-- **POST** `/api/cart` - Add item to cart
-- **DELETE** `/api/cart/{id}` - Remove item from cart
-- **POST** `/api/order` - Place an order
-- **GET** `/api/orders` - View all orders
 
 ## Screenshots
 **Home Page:**
