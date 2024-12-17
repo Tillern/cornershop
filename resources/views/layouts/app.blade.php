@@ -47,10 +47,10 @@
         <!-- Start Button -->
         <section class="button-area">
             <div class="container border-top-generic">
-                <h3 class="text-heading">Sample Buttons</h3>
+                <h3 class="text-heading">Use Admin for Admin panel and Shop for Customers</h3>
 
                 <div class="button-group-area mt-40">
-                    <a href="{{ route('customer.shop') }}" class="genric-btn default circle arrow">Shop<span
+                    <a href="{{ route('customer.shop') }}" class="genric-btn warning circle arrow">Shop<span
                             class="lnr lnr-arrow-right"></span></a>
 
                     <a href="href="{{ route('admin.dashboard') }}"" class="genric-btn info circle arrow">Admin<span
