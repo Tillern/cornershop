@@ -33,7 +33,6 @@ Cornershop is a fullstack e-commerce application designed to showcase core funct
 
 ### Frontend
 - **User Interface:** Clean and intuitive styling for easy navigation.
-- **Frameworks:** Flexible to use React or Vue.js for enhanced interactivity (optional).
 
 ### Deployment
 - **Dockerized Application:** Simplifies setup and deployment.
@@ -49,7 +48,7 @@ Cornershop is a fullstack e-commerce application designed to showcase core funct
 
 ## Technologies Used
 - **Backend:** Laravel 11
-- **Frontend:** HTML, CSS, (React/Vue optional)
+- **Frontend:** HTML, CSS, Blade
 - **Database:** MySQL or PostgreSQL
 - **Caching:** Redis
 - **Deployment:** Docker, GitHub Actions, DigitalOcean
